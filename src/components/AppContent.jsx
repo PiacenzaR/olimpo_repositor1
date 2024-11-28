@@ -1,36 +1,33 @@
 import React, { useState } from 'react';
-import ButtonGroup from './ButtonGroup'; 
+import ButtonGroup from './ButtonGroup';
 import Section from './Section';
 import ImageGallery from './ImageGallery';
 import TeamPhotos from './TeamPhotos';
 import Cadastro from '../outros component/cadastro';
 
-
 function AppContent() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const navigateTo = (page) => {
     setCurrentPage(page);
   };
 
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.body.classList.toggle('dark-theme', isDarkMode);
+    document.body.classList.toggle('light-theme', !isDarkMode);
+  };
+
   return (
     <div className="App">
+      <button onClick={toggleTheme} className="theme-toggle">
+        {isDarkMode ? 'Tema Claro' : 'Tema Escuro'}
+      </button>
+
       {currentPage === 'home' && (
         <>
           <section className="main-section">
-            <img 
-              src="../assets/academia1.gif" 
-              alt="Academia" 
-              style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100vw',
-                height: '100vh',
-                objectFit: 'cover',
-                zIndex: -1
-              }}
-            />
             <div className="overlay">
               <h1>SEJAM BEM-VINDOS AO OLIMPO!</h1>
               <ButtonGroup navigateTo={navigateTo} />
@@ -61,6 +58,5 @@ function AppContent() {
     </div>
   );
 }
-
 
 export default AppContent;
